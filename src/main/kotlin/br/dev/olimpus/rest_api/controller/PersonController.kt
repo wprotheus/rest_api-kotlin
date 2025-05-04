@@ -1,0 +1,34 @@
+package br.dev.olimpus.rest_api.controller
+
+import br.dev.olimpus.rest_api.model.Person
+import br.dev.olimpus.rest_api.service.PersonService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+
+
+@RestController
+@RequestMapping("/person")
+class PersonController {
+
+    @Autowired
+    private lateinit var service: PersonService
+
+    @GetMapping
+    fun findAll(): MutableList<Person> = service.findAll()
+
+    @GetMapping("/{id}")
+    fun findById(@PathVariable("id") id: Long): Person = service.findById(id)
+
+    @PostMapping
+    fun create(@RequestBody person: Person): Person = service.create(person)
+
+    @PutMapping
+    fun update(@RequestBody person: Person): Person = service.update(person)
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable("id") id: Long): ResponseEntity<*> {
+        service.delete(id)
+        return ResponseEntity.noContent().build<Any>()
+    }
+}
