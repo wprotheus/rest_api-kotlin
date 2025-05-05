@@ -23,6 +23,22 @@ class Person : Serializable {
     @Column(nullable = false, length = 6)
     var gender: String? = null
 
+    fun copy(
+        id: Long? = this.id,
+        firstName: String? = this.firstName,
+        lastName: String? = this.lastName,
+        address: String? = this.address,
+        gender: String? = this.gender
+    ): Person {
+        val newPerson = Person()
+        newPerson.id = id
+        newPerson.firstName = firstName
+        newPerson.lastName = lastName
+        newPerson.address = address
+        newPerson.gender = gender
+        return newPerson
+    }
+
     override fun hashCode(): Int {
         val prime = 31
         var result = 1
